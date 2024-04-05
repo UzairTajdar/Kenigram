@@ -484,18 +484,17 @@ export async function filterPosts(filter: string){
       console.log(error)
    }
 }
-
-// export async function searchUsers(searchTerm: string){
-//    try {
-//       const posts = await databases.listDocuments( 
-//          appwriteConfig.databaseId,
-//          appwriteConfig.postCollectionId,
-//          [Query.search('name'||'username', searchTerm)]
-//       )
-//       if(!posts) throw Error;
-
-//       return posts
-//    } catch (error) {
-//       console.log(error)
-//    }
-// }
+//================================Search Uers==============================
+export async function getSearchUsers(searchTerm: string){
+   try {
+      const users = await databases.listDocuments( 
+         appwriteConfig.databaseId,
+         appwriteConfig.userCollectionId,
+         [Query.search('name', searchTerm)]
+      )
+      if(!users) throw Error;
+      return users
+   } catch (error) {
+      console.log('hello',error)
+   }
+}
