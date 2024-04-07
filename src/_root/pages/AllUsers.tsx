@@ -4,19 +4,18 @@ import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
 import useDebounce from "@/hooks/useDebounce";
 import { useGetUsers, useSearchUsers } from "@/lib/react-query/queriesAndMutations";
-// import { Models } from "appwrite";
 import { useState } from "react";
 
 export type SearchResultProps = {
   isSearchFetching: boolean;
-  searchedPosts: any;
+  searchedUsers: any;
 };
 
-const SearchResults = ({ isSearchFetching, searchedPosts }: SearchResultProps) => {
+const SearchResults = ({ isSearchFetching, searchedUsers }: SearchResultProps) => {
   if (isSearchFetching) {
     return <div className="col-span-12 mt-5"> <Loader /></div> 
-  } else if (searchedPosts && searchedPosts.documents.length >  0) {
-    return searchedPosts.documents.map((creator :any) => (
+  } else if (searchedUsers && searchedUsers.documents.length >  0) {
+    return searchedUsers.documents.map((creator :any) => (
       <UserCard key={creator?.$id} user={creator} className='col-span-12 sm:col-span-6 md:col-span-4' />
     ));
   } else {
@@ -31,7 +30,7 @@ const AllUsers = () => {
   
   const [searchValue, setSearchValue] = useState("");
   const debouncedSearch = useDebounce(searchValue, 500);
-  const { data: searchedPosts, isFetching: isSearchFetching } = useSearchUsers(debouncedSearch);
+  const { data: searchedUsers, isFetching: isSearchFetching } = useSearchUsers(debouncedSearch);
 
 
   const { toast } = useToast();
@@ -76,7 +75,7 @@ const AllUsers = () => {
             <div className="grid grid-cols-12 gap-4 w-full">
                  <SearchResults
            isSearchFetching={isSearchFetching}
-           searchedPosts={searchedPosts}
+           searchedUsers={searchedUsers}
          />  
             </div>):(
            <ul className="user-grid">
